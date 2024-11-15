@@ -84,7 +84,7 @@ FW_PAYLOAD_OFFSET=0x400000
 else
 #FW_PAYLOAD_OFFSET=0x200000
 # Reduce binary size
-FW_PAYLOAD_OFFSET=0x20000
+FW_PAYLOAD_OFFSET=0x40000
 endif
 # FW_PAYLOAD_ALIGN=0x1000
 # FW_PAYLOAD_PATH="path to next boot stage binary image file"
