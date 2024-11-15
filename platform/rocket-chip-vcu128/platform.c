@@ -19,6 +19,8 @@
 #include <sbi_utils/timer/aclint_mtimer.h>
 
 #define PLATFORM_PLIC_ADDR		0xc000000
+#define PLATFORM_PLIC_SIZE		(0x200000 + \
+					 (PLATFORM_HART_COUNT * 0x1000))
 #define PLATFORM_PLIC_NUM_SOURCES	128
 #ifndef PLATFORM_HART_COUNT
 #define PLATFORM_HART_COUNT		1
@@ -35,6 +37,7 @@
 
 static struct plic_data plic = {
 	.addr = PLATFORM_PLIC_ADDR,
+	.size = PLATFORM_PLIC_SIZE,
 	.num_src = PLATFORM_PLIC_NUM_SOURCES,
 };
 

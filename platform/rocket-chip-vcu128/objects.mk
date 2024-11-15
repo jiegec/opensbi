@@ -41,18 +41,15 @@ platform-objs-y += platform.o
 #
 # platform-objs-y += <dt file name>.o
 
-# Firmware load address configuration. This is mandatory.
-FW_TEXT_START=0x80000000
-
 # Optional parameter for path to external FDT
 # FW_FDT_PATH="path to platform flattened device tree file"
-FW_FDT_PATH=../u-boot/arch/riscv/dts/rocket-chip-vcu128.dtb
 
 #
 # Dynamic firmware configuration.
 # Optional parameters are commented out. Uncomment and define these parameters
 # as needed.
 #
+# FW_DYNAMIC=<y|n>
 FW_DYNAMIC=n
 
 #
@@ -60,15 +57,25 @@ FW_DYNAMIC=n
 # Optional parameters are commented out. Uncomment and define these parameters
 # as needed.
 #
-FW_JUMP=y
+# FW_JUMP=<y|n>
+FW_JUMP=n
 # This needs to be 4MB aligned for 32-bit support
 # This needs to be 2MB aligned for 64-bit support
+# ifeq ($(PLATFORM_RISCV_XLEN), 32)
+# FW_JUMP_OFFSET=0x400000
+# else
+# FW_JUMP_OFFSET=0x200000
+# endif
+# FW_JUMP_FDT_OFFSET=0x2200000
+#
+# You can use fixed address for jump firmware as an alternative option.
+# SBI will prefer "<X>_ADDR" if both "<X>_ADDR" and "<X>_OFFSET" are
+# defined
 # ifeq ($(PLATFORM_RISCV_XLEN), 32)
 # FW_JUMP_ADDR=0x80400000
 # else
 # FW_JUMP_ADDR=0x80200000
 # endif
-FW_JUMP_ADDR=0x80200000
 # FW_JUMP_FDT_ADDR=0x82200000
 
 #
@@ -76,16 +83,23 @@ FW_JUMP_ADDR=0x80200000
 # Optional parameters are commented out. Uncomment and define these parameters
 # as needed.
 #
+# FW_PAYLOAD=<y|n>
 FW_PAYLOAD=y
 # This needs to be 4MB aligned for 32-bit support
 # This needs to be 2MB aligned for 64-bit support
 ifeq ($(PLATFORM_RISCV_XLEN), 32)
 FW_PAYLOAD_OFFSET=0x400000
 else
-#FW_PAYLOAD_OFFSET=0x200000
 # Reduce binary size
+# FW_PAYLOAD_OFFSET=0x200000
 FW_PAYLOAD_OFFSET=0x40000
 endif
 # FW_PAYLOAD_ALIGN=0x1000
 # FW_PAYLOAD_PATH="path to next boot stage binary image file"
+# FW_PAYLOAD_FDT_OFFSET=0x2200000
+#
+# You can use fixed address for payload firmware as an alternative option.
+# SBI will prefer "FW_PAYLOAD_FDT_ADDR" if both "FW_PAYLOAD_FDT_OFFSET"
+# and "FW_PAYLOAD_FDT_ADDR" are defined.
+# FW_PAYLOAD_FDT_ADDR=0x82200000
 FW_PAYLOAD_FDT_ADDR=0x82200000
